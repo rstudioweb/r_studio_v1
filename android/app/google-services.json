@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596399747115",
+    "project_id": "rstudio-e670f",
+    "storage_bucket": "rstudio-e670f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596399747115:android:ed5f23694d1a053e07ba6e",
+        "android_client_info": {
+          "package_name": "com.example.r_studio_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmdo26sfnmkB4sgok1SApvgIjQIzsLWoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
