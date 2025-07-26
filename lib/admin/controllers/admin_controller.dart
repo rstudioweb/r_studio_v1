@@ -61,7 +61,7 @@ class AdminController extends GetxController {
     try {
       final docRef = _firestore.collection("models").doc(uid);
       final doc = await docRef.get();
-      final data = doc.data() as Map<String, dynamic>?;
+      final data = doc.data();
 
       if (data == null) return;
 
@@ -85,7 +85,7 @@ class AdminController extends GetxController {
   Future<void> _syncPerformanceAndTarget(String uid) async {
     final docRef = _firestore.collection("models").doc(uid);
     final doc = await docRef.get();
-    final data = doc.data() as Map<String, dynamic>?;
+    final data = doc.data();
 
     if (data == null) return;
 

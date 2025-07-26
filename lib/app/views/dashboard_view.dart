@@ -13,6 +13,7 @@ import 'package:fl_chart/fl_chart.dart'
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tap_to_expand/tap_to_expand.dart';
 
 class DashboardView extends StatelessWidget {
   DashboardView({super.key});
@@ -63,7 +64,7 @@ class DashboardView extends StatelessWidget {
           final monthly = targets['monthly'] ?? 100;
 
           return Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(10.0),
             child: ListView(
               children: [
                 Text(
@@ -88,6 +89,26 @@ class DashboardView extends StatelessWidget {
                               .map(
                                 (entry) => Padding(
                                   padding: const EdgeInsets.symmetric(
+                                    vertical: 0.0,
+                                  ),
+                                  child: Text(
+                                    "📅 ${entry.key} — 🔥 ${entry.value} tokens",
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                ], collapsible: true),
+
+                /*  _buildCard("🏆 Achievements", [
+                  achievementsMap.isEmpty
+                      ? const Text("No achievements yet.")
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: achievementsMap.entries
+                              .map(
+                                (entry) => Padding(
+                                  padding: const EdgeInsets.symmetric(
                                     vertical: 4.0,
                                   ),
                                   child: Text(
@@ -98,6 +119,7 @@ class DashboardView extends StatelessWidget {
                               .toList(),
                         ),
                 ]),
+                 */
                 const SizedBox(height: 20),
                 _buildCard("📊 Achievement Chart (Datewise)", [
                   if (achievementsMap.isEmpty)
@@ -117,8 +139,9 @@ class DashboardView extends StatelessWidget {
                                   final index = value.toInt();
                                   final keys = achievementsMap.keys.toList()
                                     ..sort();
-                                  if (index < 0 || index >= keys.length)
+                                  if (index < 0 || index >= keys.length) {
                                     return const SizedBox();
+                                  }
                                   return Text(
                                     keys[index].substring(0, 5),
                                   ); // just dd-MM
@@ -170,8 +193,53 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String title, List<Widget> children) {
+  Widget _buildCard(
+    String title,
+    List<Widget> children, {
+    bool collapsible = false,
+  }) {
     return Card(
+      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: collapsible
+            ? TapToExpand(
+                paddingCurve: Curves.easeInOut,
+                backgroundcolor: Colors.blue,
+                title: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                iconColor: Colors.white,
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [const SizedBox(height: 16), ...children],
+                ),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ...children,
+                ],
+              ),
+      ),
+    );
+  }
+  /* Widget _buildCard(String title, List<Widget> children) {
+    return 
+     Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 4,
       child: Padding(
@@ -189,7 +257,7 @@ class DashboardView extends StatelessWidget {
         ),
       ),
     );
-  }
+  } */
 
   Widget _progressBar(String label, int current, int total) {
     double percent = total > 0 ? current / total : 0;
