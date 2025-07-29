@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:r_studio_v1/app/controllers/auth_controller.dart';
 import 'package:r_studio_v1/app/routes/app_pages.dart';
+import 'package:r_studio_v1/app/utils/app_theme.dart' show AppTheme;
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,7 +32,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // theme: ThemeData(fontFamily: GoogleFonts.roboto().fontFamily),
       title: 'Model WebApp',
+      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

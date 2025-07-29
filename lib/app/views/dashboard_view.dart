@@ -13,6 +13,7 @@ import 'package:fl_chart/fl_chart.dart'
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:r_studio_v1/app/utils/widgets.dart' show GlassCard;
 import 'package:tap_to_expand/tap_to_expand.dart';
 
 class DashboardView extends StatelessWidget {
@@ -92,7 +93,7 @@ class DashboardView extends StatelessWidget {
                                     vertical: 0.0,
                                   ),
                                   child: Text(
-                                    "📅 ${entry.key} — 🔥 ${entry.value} tokens",
+                                    "📅 ${entry.key} — 🔥 ${entry.value} tk",
                                   ),
                                 ),
                               )
@@ -198,8 +199,96 @@ class DashboardView extends StatelessWidget {
     List<Widget> children, {
     bool collapsible = false,
   }) {
+    return GlassCard(
+      title: title,
+      child: collapsible
+          ? TapToExpand(
+              backgroundcolor: Colors.transparent,
+              titlePadding: const EdgeInsets.only(bottom: 0),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children,
+              ),
+              title: const SizedBox(), // Hide default title
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
+            ),
+    );
+  }
+
+  /*
+  Widget _buildCard(
+    String title,
+    List<Widget> children, {
+    bool collapsible = false,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          colors: [
+            Colors.white.withOpacity(0.85),
+            Colors.grey.shade100.withOpacity(0.9),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: collapsible
+            ? TapToExpand(
+                backgroundcolor: Colors.transparent,
+                titlePadding: const EdgeInsets.only(bottom: 12),
+                title: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: children,
+                ),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ...children,
+                ],
+              ),
+      ),
+    );
+  }
+*/
+  /*Widget _buildCard(
+    String title,
+    List<Widget> children, {
+    bool collapsible = false,
+  }) {
     return Card(
-      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
@@ -237,7 +326,7 @@ class DashboardView extends StatelessWidget {
       ),
     );
   }
-  /* Widget _buildCard(String title, List<Widget> children) {
+   Widget _buildCard(String title, List<Widget> children) {
     return 
      Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
